@@ -1,18 +1,24 @@
-name: "Java Runner"
-description: "Compile and run Java file"
+name: "Greeting Action"
+description: "Receives name and returns message"
 
 inputs:
-  file-name:
-    description: "Java file name"
+  username:
     required: true
+    description: "User name"
+
+outputs:
+  message:
+    description: "Greeting message"
+    value: ${{ steps.set-output.outputs.message }}
+
 runs:
   using: "composite"
-
   steps:
-    - name: Compile java
-      run: javac ${{inputs.file-name}}.java
+    - name: Set Output
+      id: set-output
+      run: echo "message=Hello ${{ inputs.username }}" >> $GITHUB_OUTPUT
       shell: bash
 
-    - name: Run java Program
-      run: java ${{inputs.file-name}}
+    - name: Run Java Program
+      run: java ${{ inputs.file-name }}
       shell: bash

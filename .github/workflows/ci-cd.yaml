@@ -1,25 +1,21 @@
-name: Java CI-CD Pipeline
+name: Greeting Workflow
 
 on:
   push:
-    branches:
-      - master
+    
 
 jobs:
-  build:
+  greet:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
 
-      - name: Set Up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Run Custom Action
+      - name: Run Greeting Action
+        id: greet-actions
         uses: ./.github/actions/java-build
         with:
-          file-name: CalculatorTest
+          username: Milan
+
+      - name: Show Greeting
+        run: echo "${{steps.greet-action.outputs.message}}"
+        
